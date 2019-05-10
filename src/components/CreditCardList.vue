@@ -17,19 +17,21 @@ import { CreditCardRecommendations } from "@/lib";
 
 @Component
 export default class CreditCardList extends Vue {
+  // To Do: Handle Empty State
   private creditCardRecommendations: CreditCardRecommendations[] = [];
-  // private isError : boolean = false;
 
   private async getCardData(): Promise<void> {
+    // To Do: Handle Loading State
     try {
-      this.creditCardRecommendations = await this.getCardDataFromSerive();
+      this.creditCardRecommendations = await this.getCardDataFromService();
     } catch (err) {
       // To Do: Handle Errors
       console.log(err);
     }
   }
 
-  private getCardDataFromSerive(): Promise<any> {
+  // To Do: Move To Helper?
+  private getCardDataFromService(): Promise<any> {
     // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
       // To Do: Add Prod Settings
