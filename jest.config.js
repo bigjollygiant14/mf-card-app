@@ -31,7 +31,8 @@ module.exports = {
     "!**/*.d.ts",
     "!**/tests/**",
     "!**/coverage/**",
-    "!**/*.config.{js,json,ts}"
+    "!**/*.config.{js,json,ts}",
+    "!**/.eslintrc.js"
   ],
   coverageReporters: ["html", "lcov"]
 };

@@ -35,12 +35,24 @@ describe('CardGroup', () => {
     expect(wrapper).toBeDefined();
   });
 
+  describe('Render', () => {
+    it('It should render the header', () => {
+      const actual = wrapper.find('.CardGroup__header');
+      const expected = 'Balance Transfer with a bad credit rating.';
+      expect(actual.text()).toEqual(expected);
+    });
+  });
+
   describe('Methods', () => {
     describe('mapCardTypeToString', () => {
       it('It should map card type and return a string', () => {
         const actual = wrapper.vm.mapCardTypeToString('balance_transfer');
         const expected = 'Balance Transfer';
         expect(actual).toEqual(expected);
+
+        const actual1 = wrapper.vm.mapCardTypeToString('low_interest');
+        const expected1 = 'Low Interest';
+        expect(actual1).toEqual(expected1);
       });
 
       it('It should return the default value if passed a string that doesnt match', () => {
