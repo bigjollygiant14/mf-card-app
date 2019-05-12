@@ -6,7 +6,6 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit --watch",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
@@ -44,6 +43,7 @@
   "lint-staged": {
     "*.{js,vue}": [
       "vue-cli-service lint",
+      "vye-cli-service test:unit",
       "git add"
     ]
   }
