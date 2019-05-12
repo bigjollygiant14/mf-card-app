@@ -51,3 +51,9 @@ export interface CardIssuer {
   possessive_name: string;
   show_fee_link: boolean;
 }
+
+export interface Filters {
+  checked: boolean;
+  label: string;
+  name: string;
+}

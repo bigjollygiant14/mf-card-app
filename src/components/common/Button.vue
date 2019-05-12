@@ -3,8 +3,7 @@
     class="btn"
     v-on:mousedown="$emit('btn-clicked')"
     v-bind:class="{
-      'btn--primary': buttonType === 'btnPrimary',
-      'btn--secondary': buttonType === 'btnSecondary'
+      'btn--primary': buttonType === 'btnPrimary'
     }"
   >
     <slot></slot>
@@ -24,8 +23,6 @@ export default class Button extends Vue {
 <style scoped lang="scss">
 .btn {
   &--primary {
-  }
-  &--secondary {
   }
 }
 </style>
