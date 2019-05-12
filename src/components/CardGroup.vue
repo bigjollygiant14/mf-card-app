@@ -80,7 +80,7 @@ export default class CardGroup extends Vue {
 .CardGroup {
   border-bottom: 1px solid rgba($gray-500, 0.6);
   margin-bottom: $margin;
-  padding-bottom: $padding;
+  padding: $padding;
 
   &__card-group {
     display: flex;

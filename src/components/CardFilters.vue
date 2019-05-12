@@ -24,6 +24,8 @@ import Checkbox from "./common/Checkbox.vue";
   }
 })
 export default class CardFilters extends Vue {
+  // To Do: Font Awesome CheckBoxes
+  // Active and unactive state
   private cardTypeFilters = [
     {
       label: "Balance Transfer",
