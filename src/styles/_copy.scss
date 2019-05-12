@@ -1,0 +1,35 @@
+@import './variables';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: $margin 0;
+}
+
+.h1 {
+  font-size: $font-size-xxlarge;
+  line-height: $font-size-xxlarge * $line-height;
+}
+
+.h2 {
+  font-size: $font-size-xlarge;
+  line-height: $font-size-xlarge * $line-height;
+}
+
+.h4 {
+  font-size: $font-size-large;
+  line-height: $font-size-large * $line-height;
+}
+
+.p {
+  line-height: $font-size-base * $line-height;
+}
+
+.accent {
+  font-size: $font-size-xsmall;
+  line-height: $font-size-xsmall * $line-height;
+}

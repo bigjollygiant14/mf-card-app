@@ -5,6 +5,7 @@
 $spacing-base: 4px;
 $margin: $spacing-base * 2;
 $padding: $spacing-base * 2;
+$line-height: 9/8;
 
 // Font Sizes
 $font-size: 1rem;
@@ -14,3 +15,5 @@ $font-size-small: $font-size * 7/8; // 14px
 $font-size-base: $font-size; // 16px
 $font-size-medium: $font-size * 9/8; // 18px
 $font-size-large: $font-size * 5/4; // 20px
+$font-size-xlarge: $font-size * 7/4; // 28px
+$font-size-xxlarge: $font-size * 7/2; // 40px

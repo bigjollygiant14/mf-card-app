@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
-import CreditCardList from '@/components/CreditCardList.vue';
+import CardList from '@/components/CreditCardList.vue';
 
 // let vm: CreditCardList;
 
-describe('CreditCardList.vue', () => {
+describe('CardList.vue', () => {
   /* beforeEach(() => {
     vm = shallowMount(CreditCardList);
   });

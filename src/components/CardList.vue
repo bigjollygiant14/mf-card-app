@@ -1,9 +1,11 @@
 <template>
-  <div class="CreditCardList">
-    <div>Credit Card List</div>
-    <div v-for="(card, index) in creditCardRecommendations" v-bind:key="index">
-      {{ card.updated_date }}
-    </div>
+  <div class="CardList">
+    <CardFilters />
+    <CardGroup
+      v-for="(card, index) in cardRecommendations"
+      v-bind:key="index"
+      v-bind:card-group="card"
+    />
   </div>
 </template>
 
@@ -12,18 +14,29 @@
 import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
 
+// Components
+import CardFilters from "./CardFilters.vue";
+import CardGroup from "./CardGroup.vue";
+
 // Helpers
 import { CreditCardRecommendations } from "@/lib";
 
-@Component
-export default class CreditCardList extends Vue {
-  // To Do: Handle Empty State
-  private creditCardRecommendations: CreditCardRecommendations[] = [];
+@Component({
+  components: {
+    CardFilters,
+    CardGroup
+  }
+})
+export default class CardList extends Vue {
+  // To Do:
+  // Handle Empty State
+  // Sort by good credit first
+  private cardRecommendations: CreditCardRecommendations[] = [];
 
   private async getCardData(): Promise<void> {
     // To Do: Handle Loading State
     try {
-      this.creditCardRecommendations = await this.getCardDataFromService();
+      this.cardRecommendations = await this.getCardDataFromService();
     } catch (err) {
       // To Do: Handle Errors
       console.log(err);
