@@ -23,7 +23,7 @@ export default class Loading extends Vue {
   align-items: center;
   justify-content: center;
   height: 100%;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;

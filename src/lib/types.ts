@@ -56,6 +56,7 @@ export interface Filters {
   checked: boolean;
   label: string;
   name: string;
+  icon: string;
 }
 
 export interface Error {

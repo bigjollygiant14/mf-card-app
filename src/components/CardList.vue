@@ -1,6 +1,7 @@
 <template>
   <div class="CardList">
-    <CardFilters />
+    <h2>What can we help you find in a credit card?</h2>
+    <CardFilters class="CardList__filters" />
 
     <Loading v-bind:is-loading="isLoading" />
 
@@ -23,6 +24,7 @@
         v-for="(card, index) in cardRecommendations"
         v-bind:key="index"
         v-bind:card-group="card"
+        v-on:filterbtn-clicked="onFilterClick"
       />
     </div>
   </div>
@@ -57,7 +59,6 @@ export default class CardList extends Vue {
   private error: Error[] = [];
 
   private async getCardData(): Promise<void> {
-    // To Do: Handle Loading State
     this.isLoading = true;
     try {
       this.cardRecommendations = await this.getCardDataFromService();
@@ -90,16 +91,32 @@ export default class CardList extends Vue {
     });
   }
 
+  private onFilterClick(name: string): void {
+    console.log(name);
+  }
+
   private mounted(): void {
     this.getCardData();
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../styles/variables";
 
 .CardList {
+  position: relative;
+
+  &__filters {
+    border-bottom: 1px solid $gray-400;
+    margin-bottom: $margin * 2;
+    padding: $padding 0 $padding * 2;
+
+    h3 {
+      width: 100%;
+    }
+  }
+
   &__error {
     text-align: center;
 

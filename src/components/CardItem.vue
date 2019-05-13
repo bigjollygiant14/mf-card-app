@@ -83,7 +83,7 @@
         </v-tab>
 
         <v-tab title="Nitty Gritty" class="CardItem__marketing">
-          <h5>The Nitty Gritty</h5>
+          <h4>The Nitty Gritty</h4>
           <p v-html="card.marketing_bullets"></p>
         </v-tab>
       </vue-tabs>

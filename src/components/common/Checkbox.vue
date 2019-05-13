@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="Checkbox">
     <label>
       <input type="checkbox" v-model="isChecked" />
-      <span>{{ label }}</span>
     </label>
+    <div>{{ label }}</div>
   </div>
 </template>
 

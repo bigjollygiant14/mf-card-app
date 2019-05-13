@@ -20,7 +20,11 @@
       v-else
       v-html="cardGroup.error_text"
     ></div>
-    <div class="CardGroup__cta" v-html="cardGroup.cta_text"></div>
+    <div
+      class="CardGroup__cta"
+      v-if="cardGroup.cta_text"
+      v-html="cardGroup.cta_text"
+    ></div>
     <div class="CardGroup__updated accent">
       Updated {{ cardGroup.updated_date }}
     </div>
