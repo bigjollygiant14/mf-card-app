@@ -24,7 +24,6 @@
         v-for="(card, index) in cardRecommendations"
         v-bind:key="index"
         v-bind:card-group="card"
-        v-on:filterbtn-clicked="onFilterClick"
       />
     </div>
   </div>
@@ -34,6 +33,8 @@
 // Vendor
 import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
+import orderBy from "lodash.orderby";
+import filter from "lodash.filter";
 
 // Components
 import CardFilters from "./CardFilters.vue";
@@ -51,9 +52,7 @@ import { CreditCardRecommendations, Error } from "@/lib";
   }
 })
 export default class CardList extends Vue {
-  // To Do:
-  // Handle Empty State
-  // Sort by good credit first
+  // To Do: Handle Empty State
   private cardRecommendations: CreditCardRecommendations[] = [];
   private isLoading: boolean = false;
   private error: Error[] = [];
@@ -61,8 +60,8 @@ export default class CardList extends Vue {
   private async getCardData(): Promise<void> {
     this.isLoading = true;
     try {
-      this.cardRecommendations = await this.getCardDataFromService();
-      // this.error = [...this.error, {status: '500', message: "Bad Gateway"}]
+      const cardRecommendations = await this.getCardDataFromService();
+      this.cardRecommendations = this.sortCards(cardRecommendations);
       this.isLoading = false;
     } catch (err) {
       this.isLoading = false;
@@ -73,7 +72,6 @@ export default class CardList extends Vue {
     }
   }
 
-  // To Do: Move To Helper?
   private getCardDataFromService(): Promise<any> {
     // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
@@ -91,8 +89,20 @@ export default class CardList extends Vue {
     });
   }
 
-  private onFilterClick(name: string): void {
-    console.log(name);
+  private sortCards(
+    cardList: CreditCardRecommendations[]
+  ): CreditCardRecommendations[] {
+    return orderBy(cardList, ["card_type", "credit_rating"], ["asc", "desc"]);
+  }
+
+  private filterCards(
+    cardList: CreditCardRecommendations[]
+  ): CreditCardRecommendations[] {
+    // this.cardRecommendations = this.filterCards(this.cardRecommendations)
+    // this.error = [...this.error, {status: '500', message: "Bad Gateway"}]
+    return filter(cardList, card => {
+      return card.card_type === "balance_transfer";
+    });
   }
 
   private mounted(): void {

@@ -11,6 +11,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "lodash.filter": "^4.6.0",
+    "lodash.orderby": "^4.6.0",
     "reset-css": "^4.0.1",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
@@ -29,6 +31,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "font-awesome": "^4.7.0",
