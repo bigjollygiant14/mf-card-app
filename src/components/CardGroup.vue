@@ -20,7 +20,7 @@
       v-else
       v-html="cardGroup.error_text"
     ></div>
-    <div v-html="cardGroup.cta_text"></div>
+    <div class="CardGroup__cta" v-html="cardGroup.cta_text"></div>
     <div class="CardGroup__updated accent">
       Updated {{ cardGroup.updated_date }}
     </div>
@@ -93,11 +93,17 @@ export default class CardGroup extends Vue {
     }
   }
 
+  &__cta {
+    padding: 8px;
+    border: 2px solid $gray-300;
+  }
+
   &__header {
     text-transform: capitalize;
   }
 
   &__updated {
+    margin: $margin 0;
     text-align: right;
   }
 }

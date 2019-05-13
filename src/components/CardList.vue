@@ -1,11 +1,30 @@
 <template>
   <div class="CardList">
     <CardFilters />
-    <CardGroup
-      v-for="(card, index) in cardRecommendations"
-      v-bind:key="index"
-      v-bind:card-group="card"
-    />
+
+    <Loading v-bind:is-loading="isLoading" />
+
+    <div class="CardList__error" v-if="error.length > 0">
+      <h2>
+        "Something has gone horribly wrong"
+        <br />- Tim
+      </h2>
+      <br />We're working on getting this resolved and are sorry for any
+      inconvenience.
+      <br />
+      <div v-for="(error, index) in error" v-bind:key="index">
+        <br />
+        Status: {{ error.status }}, Message: {{ error.message }}
+      </div>
+    </div>
+
+    <div v-if="cardRecommendations.length > 0">
+      <CardGroup
+        v-for="(card, index) in cardRecommendations"
+        v-bind:key="index"
+        v-bind:card-group="card"
+      />
+    </div>
   </div>
 </template>
 
@@ -17,14 +36,16 @@ import axios from "axios";
 // Components
 import CardFilters from "./CardFilters.vue";
 import CardGroup from "./CardGroup.vue";
+import Loading from "./common/Loading.vue";
 
 // Helpers
-import { CreditCardRecommendations } from "@/lib";
+import { CreditCardRecommendations, Error } from "@/lib";
 
 @Component({
   components: {
     CardFilters,
-    CardGroup
+    CardGroup,
+    Loading
   }
 })
 export default class CardList extends Vue {
@@ -32,14 +53,22 @@ export default class CardList extends Vue {
   // Handle Empty State
   // Sort by good credit first
   private cardRecommendations: CreditCardRecommendations[] = [];
+  private isLoading: boolean = false;
+  private error: Error[] = [];
 
   private async getCardData(): Promise<void> {
     // To Do: Handle Loading State
+    this.isLoading = true;
     try {
       this.cardRecommendations = await this.getCardDataFromService();
+      // this.error = [...this.error, {status: '500', message: "Bad Gateway"}]
+      this.isLoading = false;
     } catch (err) {
-      // To Do: Handle Errors
-      console.log(err);
+      this.isLoading = false;
+      this.error = [
+        ...this.error,
+        { status: err.status, message: err.message }
+      ];
     }
   }
 
@@ -51,7 +80,6 @@ export default class CardList extends Vue {
       axios
         .get("FOOL_API/creditcardrecommendations/")
         .then(function(response) {
-          // Question: More statuses?
           if (response.status === 200) {
             resolve(response.data);
           }
@@ -68,4 +96,16 @@ export default class CardList extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import "../styles/variables";
+
+.CardList {
+  &__error {
+    text-align: center;
+
+    h2 {
+      color: $brand-red;
+    }
+  }
+}
+</style>

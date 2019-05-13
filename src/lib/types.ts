@@ -57,3 +57,8 @@ export interface Filters {
   label: string;
   name: string;
 }
+
+export interface Error {
+  message: string;
+  status: string;
+}
