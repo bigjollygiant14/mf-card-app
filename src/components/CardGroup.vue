@@ -90,9 +90,14 @@ export default class CardGroup extends Vue {
     display: flex;
     flex-wrap: wrap;
 
+    @include respond-above(sm) {
+      flex: 4;
+    }
+
     &-item {
       @include respond-above(sm) {
-        flex-basis: 50%;
+        flex: 2;
+        margin: $margin * 2;
       }
     }
   }

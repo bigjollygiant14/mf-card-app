@@ -43,8 +43,16 @@ export default class FilterButton extends Vue {
     width: 100%;
 
     &-icon {
+      align-items: center;
+      background-color: $white;
+      border: 2px solid $gray-600;
+      border-radius: 50%;
       color: $brand-red;
+      display: flex;
       font-size: $font-size-xlarge;
+      height: 36px;
+      justify-content: center;
+      width: 36px;
     }
   }
 }
