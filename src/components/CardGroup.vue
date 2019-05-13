@@ -2,7 +2,7 @@
   <div class="CardGroup">
     <h2 class="CardGroup__header">
       {{ mapCardTypeToString(cardGroup.card_type) }} with a
-      {{ cardGroup.credit_rating }} credit rating.
+      {{ mapCreditRatingToString(cardGroup.credit_rating) }} credit rating.
     </h2>
     <h4>{{ cardGroup.intro_text }}</h4>
     <div class="CardGroup__card-group" v-if="cardGroup.card1" v-cloak>
@@ -80,7 +80,7 @@ export default class CardGroup extends Vue {
 .CardGroup {
   border-bottom: 1px solid rgba($gray-500, 0.6);
   margin-bottom: $margin;
-  padding: $padding;
+  padding: $padding / 2;
 
   &__card-group {
     display: flex;

@@ -1,0 +1,47 @@
+@import './variables';
+
+.vue-tabs {
+  .nav-tabs-navigation {
+    height: 60px;
+  }
+
+  .nav-tabs-wrapper {
+    height: 100%;
+
+    .nav-tabs {
+      height: 100%;
+      flex: 3;
+
+      li {
+        border: 1px solid $gray-500;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        margin: 0 $margin/4;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &.active {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    border-bottom: 1px solid $gray-500;
+    border-left: 1px solid $gray-500;
+    border-right: 1px solid $gray-500;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}

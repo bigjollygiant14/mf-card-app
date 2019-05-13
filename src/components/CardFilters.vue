@@ -8,6 +8,7 @@
       v-bind:checked="option.checked"
       @input="option.checked = $event"
     />
+    <Icon icon="luggage-cart" />
   </div>
 </template>
 
@@ -17,10 +18,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 // Components
 import Checkbox from "./common/Checkbox.vue";
+import Icon from "./common/Icon.vue";
 
 @Component({
   components: {
-    Checkbox
+    Checkbox,
+    Icon
   }
 })
 export default class CardFilters extends Vue {
