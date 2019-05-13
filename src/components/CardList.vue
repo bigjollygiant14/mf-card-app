@@ -77,8 +77,9 @@ export default class CardList extends Vue {
     return new Promise<any>((resolve, reject) => {
       // To Do: Add Prod Settings
       const api = process.env.VUE_APP_API_URL;
+      console.log(api);
       axios
-        .get("FOOL_API/creditcardrecommendations/")
+        .get(api + "/creditcardrecommendations/")
         .then(function(response) {
           if (response.status === 200) {
             resolve(response.data);
