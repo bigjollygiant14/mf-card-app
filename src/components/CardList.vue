@@ -203,8 +203,11 @@ export default class CardList extends Vue {
       this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
     }
 
-    // Sort
-    this.cardRecommendations = this.sortCards(this.cardRecommendations);
+    // Sort and if length is 0, use full list
+    this.cardRecommendations =
+      this.cardRecommendations.length > 0
+        ? this.sortCards(this.cardRecommendations)
+        : this.sortCards(this.cardRecommendationsFull);
   }
 
   private mounted(): void {

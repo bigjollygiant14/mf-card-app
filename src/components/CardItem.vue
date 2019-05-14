@@ -5,6 +5,7 @@
       <div class="CardItem__header-rating">
         <Rating v-bind:rating="card.star_rating" v-bind:out-of="5" />
         <a
+          v-if="card.affiliate_link"
           class="CardItem__apply"
           v-bind:href="card.affiliate_link"
           target="_blank"
