@@ -69,10 +69,8 @@ import { CreditCardRecommendations, Error, EventBus, Filters } from "@/lib";
   }
 })
 export default class CardList extends Vue {
-  // To Do: Handle Empty State
   private cardRecommendations: CreditCardRecommendations[] = [];
-  private cardRecommendationsFull: CreditCardRecommendations[] = [];
-  private appliedFilters: any[] = [];
+  private cardRecommendationsFull: CreditCardRecommendations[] = []; // make immutable
   private isLoading: boolean = false;
   private error: Error[] = [];
   private isVisible: boolean = false;
