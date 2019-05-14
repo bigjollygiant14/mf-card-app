@@ -90,18 +90,32 @@ export default class CardList extends Vue {
   private getCardDataFromService(): Promise<any> {
     // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
-      // To Do: Set up Mock
-      const api = process.env.VUE_APP_API_URL;
-      axios
-        .get(api + "/creditcardrecommendations/")
-        .then(function(response) {
-          if (response.status === 200) {
-            resolve(response.data);
-          }
-        })
-        .catch(function(error) {
-          reject(error);
-        });
+      if (process.env.VUE_APP_ENV !== "STAGE") {
+        const api = process.env.VUE_APP_API_URL;
+        axios
+          .get(api + "/creditcardrecommendations/")
+          .then(function(response) {
+            if (response.status === 200) {
+              resolve(response.data);
+            }
+          })
+          .catch(function(error) {
+            reject(error);
+          });
+      } else {
+        setTimeout(() => {
+          axios
+            .get("../../CreditCardRecommendations.json")
+            .then(function(response) {
+              if (response.status === 200) {
+                resolve(response.data);
+              }
+            })
+            .catch(function(error) {
+              reject(error);
+            });
+        }, 500);
+      }
     });
   }
 
