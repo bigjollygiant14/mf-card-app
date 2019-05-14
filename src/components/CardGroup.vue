@@ -1,8 +1,8 @@
 <template>
   <div class="CardGroup">
     <h2 class="CardGroup__header">
-      {{ mapCardTypeToString(cardGroup.card_type) }} with a
-      {{ mapCreditRatingToString(cardGroup.credit_rating) }} credit rating.
+      {{ mapCardTypeToString(cardGroup.card_type) }} with credit rating of
+      {{ mapCreditRatingToString(cardGroup.credit_rating) }}.
     </h2>
     <h4>{{ cardGroup.intro_text }}</h4>
     <div class="CardGroup__card-group" v-if="cardGroup.card1" v-cloak>

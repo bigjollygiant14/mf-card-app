@@ -75,9 +75,8 @@ export default class CardList extends Vue {
   private getCardDataFromService(): Promise<any> {
     // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
-      // To Do: Add Prod Settings
+      // To Do: Set up Mock
       const api = process.env.VUE_APP_API_URL;
-      console.log(api);
       axios
         .get(api + "/creditcardrecommendations/")
         .then(function(response) {
