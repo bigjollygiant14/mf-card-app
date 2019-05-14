@@ -1,10 +1,10 @@
 # mf-card-app
 
-# Author - bigjollygiant14
+### Author - bigjollygiant14
+
+View a demo on [GitHub](https://bigjollygiant14.github.io/mf-card-app/)
 
 # Methodology
-
-View a demo on [GitHub]{https://bigjollygiant14.github.io/mf-card-app/}
 
 ## Embedding
 
