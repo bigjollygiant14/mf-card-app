@@ -52,11 +52,19 @@ describe('CardItem', () => {
     });
   });
 
-  describe('Methods', () => {
-    describe('mapCardTypeToString', () => {
-      it('It should map card type and return a string', () => {
-        expect(true).toBeTruthy();
-      });
+  afterEach(() => {
+    wrapper.vm.$destroy;
+  });
+
+  it('should create a CardItem component', () => {
+    expect(wrapper).toBeDefined();
+  });
+
+  describe('Render', () => {
+    it('Should render the header', () => {
+      const actual = wrapper.find('.CardItem__header-copy');
+      const expected = 'Wells Fargo Platinum Visa card';
+      expect(actual.text()).toEqual(expected);
     });
   });
 });

@@ -89,7 +89,6 @@
         </v-tab>
       </vue-tabs>
     </div>
-    <div class="CardItem__bonus"></div>
   </div>
 </template>
 

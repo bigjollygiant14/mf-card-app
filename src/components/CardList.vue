@@ -74,7 +74,6 @@ export default class CardList extends Vue {
   private isLoading: boolean = false;
   private error: Error[] = [];
   private isVisible: boolean = false;
-
   private cardTypeFilters: Filters[] = [
     {
       label: "Balance Transfer",
@@ -180,26 +179,30 @@ export default class CardList extends Vue {
     });
   }
 
-  private handleFilterApply(name: string): void {
-    const index = this.cardTypeFilters.findIndex(card => {
-      return card.name === name;
-    });
-    // Apply Check
-    this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
-
-    // Get Strings of applied Checks
-    let newArray = filter(this.cardTypeFilters, filter => {
+  private getAppliedFiltersString(cardTypeFilters: Filters[]): string[] {
+    return filter(cardTypeFilters, filter => {
       return filter.checked === true;
     }).map(filter => {
       return filter.name;
     });
+  }
+
+  private handleFilterApply(name: string): void {
+    // Apply Check
+    const index = this.cardTypeFilters.findIndex(card => {
+      return card.name === name;
+    });
+    this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
+
+    // Get Strings of applied Checks
+    let filterArray = this.getAppliedFiltersString(this.cardTypeFilters);
 
     // Build New Array of Filtered Cards to Display
     this.cardRecommendations = [];
-    for (let i = 0; i < newArray.length; i++) {
+    for (let i = 0; i < filterArray.length; i++) {
       let filteredArray = this.filterCards(
         this.cardRecommendationsFull,
-        newArray[i]
+        filterArray[i]
       );
       this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
     }
