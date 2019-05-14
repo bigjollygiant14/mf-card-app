@@ -106,7 +106,7 @@ export default class CardList extends Vue {
       } else {
         setTimeout(() => {
           axios
-            .get("../../CreditCardRecommendations.json")
+            .get("/CreditCardRecommendations.json")
             .then(function(response) {
               if (response.status === 200) {
                 resolve(response.data);
