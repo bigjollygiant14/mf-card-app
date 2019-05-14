@@ -91,7 +91,7 @@ export default class CardList extends Vue {
     // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
       console.log(process.env.VUE_APP_ENV);
-      if (process.env.VUE_APP_ENV !== "STAGE") {
+      if (process.env.VUE_APP_ENV !== "stage") {
         const api = process.env.VUE_APP_API_URL;
         axios
           .get(api + "/creditcardrecommendations/")
