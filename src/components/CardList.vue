@@ -57,7 +57,7 @@ import Loading from "./common/Loading.vue";
 import Icon from "./common/Icon.vue";
 
 // Helpers
-import { CreditCardRecommendations, Error, EventBus } from "@/lib";
+import { CreditCardRecommendations, Error, EventBus, Filters } from "@/lib";
 
 @Component({
   components: {
@@ -77,7 +77,7 @@ export default class CardList extends Vue {
   private error: Error[] = [];
   private isVisible: boolean = false;
 
-  private cardTypeFilters = [
+  private cardTypeFilters: Filters[] = [
     {
       label: "Balance Transfer",
       name: "balance_transfer",
