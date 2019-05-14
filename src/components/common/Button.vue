@@ -21,8 +21,21 @@ export default class Button extends Vue {
 </script>
 
 <style scoped lang="scss">
+@import "../../styles/variables";
+
 .btn {
+  min-height: 40px;
+  min-width: 120px;
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
+
   &--primary {
+    background-color: $brand-blue;
+    border: 1px solid $brand-blue;
+    color: $white;
   }
 }
 </style>

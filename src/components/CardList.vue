@@ -26,6 +26,16 @@
         v-bind:card-group="card"
       />
     </div>
+
+    <div class="CardList__scroller" v-show="isVisible">
+      <Button
+        class="CardList__button"
+        buttonType="btnPrimary"
+        v-on:btn-clicked="scrollToTop"
+      >
+        <Icon icon="arrow-up" />
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -37,18 +47,22 @@ import orderBy from "lodash.orderby";
 import filter from "lodash.filter";
 
 // Components
+import Button from "./common/Button.vue";
 import CardFilters from "./CardFilters.vue";
 import CardGroup from "./CardGroup.vue";
 import Loading from "./common/Loading.vue";
+import Icon from "./common/Icon.vue";
 
 // Helpers
 import { CreditCardRecommendations, Error } from "@/lib";
 
 @Component({
   components: {
+    Button,
     CardFilters,
     CardGroup,
-    Loading
+    Loading,
+    Icon
   }
 })
 export default class CardList extends Vue {
@@ -56,6 +70,7 @@ export default class CardList extends Vue {
   private cardRecommendations: CreditCardRecommendations[] = [];
   private isLoading: boolean = false;
   private error: Error[] = [];
+  private isVisible: boolean = false;
 
   private async getCardData(): Promise<void> {
     this.isLoading = true;
@@ -90,6 +105,21 @@ export default class CardList extends Vue {
     });
   }
 
+  private scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  private handleScroll(event: any): void {
+    event.preventDefault();
+    this.isVisible =
+      ((document.documentElement && document.documentElement.scrollTop) ||
+        document.body.scrollTop) >=
+      0.2 * window.innerHeight;
+  }
+
   private sortCards(
     cardList: CreditCardRecommendations[]
   ): CreditCardRecommendations[] {
@@ -108,6 +138,11 @@ export default class CardList extends Vue {
 
   private mounted(): void {
     this.getCardData();
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  private destroyed(): void {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 }
 </script>
@@ -117,6 +152,12 @@ export default class CardList extends Vue {
 
 .CardList {
   position: relative;
+
+  &__button {
+    &.btn--primary {
+      min-width: 40px;
+    }
+  }
 
   &__filters {
     border-bottom: 1px solid $gray-400;
@@ -134,6 +175,13 @@ export default class CardList extends Vue {
     h2 {
       color: $brand-red;
     }
+  }
+
+  &__scroller {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
   }
 }
 </style>
