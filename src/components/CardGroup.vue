@@ -32,9 +32,6 @@
 </template>
 
 <script lang="ts">
-// To Do:
-// Handle Errors
-
 // Vendor
 import { Component, Prop, Vue } from "vue-property-decorator";
 

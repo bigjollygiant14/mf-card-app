@@ -1,7 +1,10 @@
 <template>
   <div class="CardList">
     <h2>What can we help you find in a credit card?</h2>
-    <CardFilters class="CardList__filters" />
+    <CardFilters
+      class="CardList__filters"
+      v-bind:card-type-filters="cardTypeFilters"
+    />
 
     <Loading v-bind:is-loading="isLoading" />
 
@@ -54,7 +57,7 @@ import Loading from "./common/Loading.vue";
 import Icon from "./common/Icon.vue";
 
 // Helpers
-import { CreditCardRecommendations, Error } from "@/lib";
+import { CreditCardRecommendations, Error, EventBus } from "@/lib";
 
 @Component({
   components: {
@@ -68,15 +71,44 @@ import { CreditCardRecommendations, Error } from "@/lib";
 export default class CardList extends Vue {
   // To Do: Handle Empty State
   private cardRecommendations: CreditCardRecommendations[] = [];
+  private cardRecommendationsFull: CreditCardRecommendations[] = [];
+  private appliedFilters: any[] = [];
   private isLoading: boolean = false;
   private error: Error[] = [];
   private isVisible: boolean = false;
 
+  private cardTypeFilters = [
+    {
+      label: "Balance Transfer",
+      name: "balance_transfer",
+      checked: false,
+      icon: "exchange-alt"
+    },
+    {
+      label: "Low Interest",
+      name: "low_interest",
+      checked: false,
+      icon: "tag"
+    },
+    {
+      label: "Travel",
+      name: "travel",
+      checked: false,
+      icon: "plane-departure"
+    },
+    {
+      label: "Cash Back",
+      name: "cash_back",
+      checked: false,
+      icon: "hand-holding-usd"
+    }
+  ];
+
   private async getCardData(): Promise<void> {
     this.isLoading = true;
     try {
-      const cardRecommendations = await this.getCardDataFromService();
-      this.cardRecommendations = this.sortCards(cardRecommendations);
+      this.cardRecommendationsFull = await this.getCardDataFromService();
+      this.cardRecommendations = this.sortCards(this.cardRecommendationsFull);
       this.isLoading = false;
     } catch (err) {
       this.isLoading = false;
@@ -88,9 +120,7 @@ export default class CardList extends Vue {
   }
 
   private getCardDataFromService(): Promise<any> {
-    // To Do: Update to Response Body Type instead of Any
     return new Promise<any>((resolve, reject) => {
-      console.log(process.env.VUE_APP_ENV);
       if (process.env.VUE_APP_ENV !== "stage") {
         const api = process.env.VUE_APP_API_URL;
         axios
@@ -144,22 +174,50 @@ export default class CardList extends Vue {
   }
 
   private filterCards(
-    cardList: CreditCardRecommendations[]
+    cardList: CreditCardRecommendations[],
+    name: string
   ): CreditCardRecommendations[] {
-    // this.cardRecommendations = this.filterCards(this.cardRecommendations)
-    // this.error = [...this.error, {status: '500', message: "Bad Gateway"}]
     return filter(cardList, card => {
-      return card.card_type === "balance_transfer";
+      return card.card_type === name;
     });
+  }
+
+  private handleFilterApply(name: string): void {
+    const index = this.cardTypeFilters.findIndex(card => {
+      return card.name === name;
+    });
+    // Apply Check
+    this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
+
+    // Get Strings of applied Checks
+    let newArray = filter(this.cardTypeFilters, filter => {
+      return filter.checked === true;
+    }).map(filter => {
+      return filter.name;
+    });
+
+    // Build New Array of Filtered Cards to Display
+    this.cardRecommendations = [];
+    for (let i = 0; i < newArray.length; i++) {
+      let filteredArray = this.filterCards(this.cardRecommendationsFull, name);
+      this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
+    }
+
+    // Sort
+    this.cardRecommendations = this.sortCards(this.cardRecommendations);
   }
 
   private mounted(): void {
     this.getCardData();
     window.addEventListener("scroll", this.handleScroll);
+
+    EventBus.$on("apply-filter", this.handleFilterApply);
   }
 
   private destroyed(): void {
     window.removeEventListener("scroll", this.handleScroll);
+
+    EventBus.$off("apply-filter", this.handleFilterApply);
   }
 }
 </script>

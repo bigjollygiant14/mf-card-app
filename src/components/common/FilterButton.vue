@@ -1,5 +1,5 @@
 <template>
-  <div class="FilterButton" v-on:mousedown="$emit('filterbtn-clicked', name)">
+  <div class="FilterButton" v-on:mousedown="emitGlobalClickEvent">
     <slot></slot>
     <div class="FilterButton__checked" v-if="checked === true">
       <Icon class="FilterButton__checked-icon" icon="check"></Icon>
@@ -14,6 +14,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 // Components
 import Icon from "./Icon.vue";
 
+// Event Bus
+import { EventBus } from "@/lib";
+
 @Component({
   components: {
     Icon
@@ -22,6 +25,10 @@ import Icon from "./Icon.vue";
 export default class FilterButton extends Vue {
   @Prop() private checked!: boolean;
   @Prop() private name!: string;
+
+  private emitGlobalClickEvent(): void {
+    EventBus.$emit("apply-filter", this.name);
+  }
 }
 </script>
 
