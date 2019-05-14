@@ -1,6 +1,9 @@
 module.exports = {
   outputDir: "docs",
-  publicPath: process.env.NODE_ENV === "production" ? "/mf-card-app/" : "/",
+  publicPath:
+    process.env.NODE_ENV === "production" || process.env.NODE_ENV === "stage"
+      ? "/mf-card-app/"
+      : "/",
   devServer: {
     proxy: {
       "/FOOL_API/*": {
