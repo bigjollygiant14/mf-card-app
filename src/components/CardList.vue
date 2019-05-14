@@ -199,7 +199,10 @@ export default class CardList extends Vue {
     // Build New Array of Filtered Cards to Display
     this.cardRecommendations = [];
     for (let i = 0; i < newArray.length; i++) {
-      let filteredArray = this.filterCards(this.cardRecommendationsFull, name);
+      let filteredArray = this.filterCards(
+        this.cardRecommendationsFull,
+        newArray[i]
+      );
       this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
     }
 
