@@ -1,5 +1,8 @@
 <template>
   <div class="CardFilters">
+    <div class="CardFilters__copy">
+      <slot></slot>
+    </div>
     <FilterButton
       class="CardFilters__filter"
       v-for="(option, index) in cardTypeFilters"
@@ -42,32 +45,32 @@ export default class CardFilters extends Vue {
 .CardFilters {
   align-items: center;
   display: flex;
-  height: 80px;
+  flex: 8;
+  flex-wrap: wrap;
   justify-content: space-between;
 
-  &__filter {
-    align-items: baseline;
-    background-color: $brand-blue;
-    color: $white;
-    display: flex;
-    flex-basis: 25%;
-    flex-wrap: wrap;
-    height: 100%;
-    justify-content: center;
-    margin-right: $margin;
-    padding: $padding;
-    text-align: center;
+  @include respond-above(sm) {
+    flex: 6;
+    flex-wrap: nowrap;
+  }
 
-    &:hover {
-      background-color: darken($brand-blue, 5%);
+  &__copy {
+    flex: 8;
+    flex-basis: 100%;
+
+    @include respond-above(sm) {
+      flex: 2;
     }
+  }
 
+  &__filter {
     &:last-child {
       margin-right: 0;
     }
 
     @include respond-above(sm) {
       align-items: center;
+      flex: 1;
       height: 48px;
       flex-wrap: nowrap;
     }

@@ -1,8 +1,12 @@
 <template>
-  <div class="FilterButton" v-on:mousedown="emitGlobalClickEvent">
+  <div
+    class="FilterButton"
+    v-bind:class="{ 'FilterButton--checked': checked === true }"
+    v-on:mousedown="emitGlobalClickEvent"
+  >
     <slot></slot>
-    <div class="FilterButton__checked" v-if="checked === true">
-      <Icon class="FilterButton__checked-icon" icon="check"></Icon>
+    <div class="FilterButton__icon-container">
+      <Icon class="FilterButton__icon" icon="check"></Icon>
     </div>
   </div>
 </template>
@@ -34,32 +38,65 @@ export default class FilterButton extends Vue {
 
 <style scoped lang="scss">
 @import "../../styles/variables";
+@import "../../styles/breakpoints";
 
 .FilterButton {
+  align-items: baseline;
+  background-color: $brand-blue;
+  border: 2px solid $brand-blue;
+  border-radius: $border-radius;
+  color: $white;
+  display: flex;
+  flex: 2;
+  flex-wrap: wrap;
+  height: 80px;
+  justify-content: center;
+  margin-right: $margin;
+  padding: $padding;
   position: relative;
+  text-align: center;
 
-  &__checked {
+  @include respond-above(sm) {
+    &:hover {
+      background-color: darken($brand-blue, 10%);
+    }
+  }
+
+  &__icon-container {
     align-items: center;
-    background-color: rgba($white, 0.65);
-    display: flex;
+    display: none;
     height: 100%;
     justify-content: center;
     left: 0;
     position: absolute;
     top: 0;
     width: 100%;
+  }
 
-    &-icon {
+  &--checked {
+    background-color: $white;
+    color: $brand-blue;
+
+    @include respond-above(sm) {
+      &:hover {
+        background-color: $gray-200;
+      }
+    }
+
+    &__icon {
       align-items: center;
-      background-color: $white;
       border: 2px solid $gray-600;
       border-radius: 50%;
-      color: $brand-red;
+      color: $brand-blue;
       display: flex;
       font-size: $font-size-xlarge;
       height: 36px;
       justify-content: center;
       width: 36px;
+
+      &-container {
+        display: flex;
+      }
     }
   }
 }

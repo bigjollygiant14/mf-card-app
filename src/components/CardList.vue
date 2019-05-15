@@ -1,10 +1,11 @@
 <template>
   <div class="CardList">
-    <h2>I want to maximize...</h2>
     <CardFilters
       class="CardList__filters"
       v-bind:card-type-filters="cardTypeFilters"
-    />
+    >
+      <h2 class="CardList__filters-header">I want to maximize...</h2>
+    </CardFilters>
 
     <Loading v-bind:is-loading="isLoading" />
 
@@ -235,6 +236,7 @@ export default class CardList extends Vue {
 
 <style lang="scss">
 @import "../styles/variables";
+@import "../styles/breakpoints";
 
 .CardList {
   position: relative;
@@ -252,6 +254,12 @@ export default class CardList extends Vue {
 
     h3 {
       width: 100%;
+    }
+
+    &-header {
+      @include respond-above(sm) {
+        margin-right: $margin * 2;
+      }
     }
   }
 
