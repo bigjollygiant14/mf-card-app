@@ -250,7 +250,7 @@ export default class CardList extends Vue {
   &__filters {
     border-bottom: 1px solid $gray-400;
     margin-bottom: $margin * 2;
-    padding: $padding 0 $padding * 2;
+    padding: $padding $padding $padding * 2;
 
     h3 {
       width: 100%;

@@ -3,7 +3,11 @@
     <div class="CardItem__header">
       <h2 class="CardItem__header-copy">{{ card.offer_name }}</h2>
       <div class="CardItem__header-rating">
-        <Rating v-bind:rating="card.star_rating" v-bind:out-of="5" />
+        <Rating
+          class="CardItem__header-rating-stars"
+          v-bind:rating="card.star_rating"
+          v-bind:out-of="5"
+        />
         <div class="CardItem__apply">
           <a
             v-if="card.affiliate_link"
@@ -25,6 +29,11 @@
     </div>
 
     <div class="CardItem__ratings">
+      <Rating
+        class="CardItem__ratings-stars"
+        v-bind:rating="card.star_rating"
+        v-bind:out-of="5"
+      />
       <div class="CardItem__sub-rating">
         Fees
         <br />
@@ -137,7 +146,16 @@ export default class CardItem extends Vue {
     font-size: $font-size-large;
 
     @include respond-above(sm) {
+      font-size: $font-size-xlarge;
       width: 100%;
+    }
+
+    .Icon {
+      font-size: $font-size-base;
+
+      @include respond-above(sm) {
+        font-size: $font-size-large;
+      }
     }
   }
 
@@ -181,11 +199,15 @@ export default class CardItem extends Vue {
       justify-content: space-between;
 
       @include respond-above(sm) {
-        align-items: flex-start;
         flex-wrap: wrap;
-        margin-top: $margin * 4;
+        flex-basis: 50%;
         order: 2;
-        width: 50%;
+      }
+
+      &-stars {
+        @include respond-above(sm) {
+          display: none;
+        }
       }
     }
   }
@@ -199,7 +221,7 @@ export default class CardItem extends Vue {
       margin: $margin 0;
 
       @include respond-above(sm) {
-        order: 3;
+        order: 1;
         width: 50%;
       }
     }
@@ -213,7 +235,38 @@ export default class CardItem extends Vue {
     margin: $margin 0;
 
     @include respond-above(sm) {
+      border-top: 1px solid $gray-300;
       margin: $margin $margin * 2;
+      padding: $padding 0;
+    }
+
+    &-stars {
+      display: none;
+      flex-basis: 100%;
+      text-align: center;
+
+      @include respond-above(sm) {
+        align-items: center;
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+
+      .Icon {
+        @include respond-above(sm) {
+          font-size: 40px;
+          height: 50px;
+          line-height: 50px;
+          width: 50px;
+        }
+      }
+
+      .Rating__text {
+        @include respond-above(sm) {
+          display: none;
+        }
+      }
     }
   }
 
@@ -221,6 +274,14 @@ export default class CardItem extends Vue {
     flex: 2;
     font-size: $font-size-small;
     text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
+
+    @include respond-above(sm) {
+      margin-top: $margin * 1.5;
+    }
 
     .Rating {
       .Icon {

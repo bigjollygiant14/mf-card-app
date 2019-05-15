@@ -1,11 +1,11 @@
 <template>
   <div class="Rating">
     <Icon
+      class="Rating__icon"
       v-for="(star, index) in outOf"
       v-bind:key="index"
       v-bind:icon="getIcon(index)"
     />
-    <br />
     <div class="Rating__text">{{ rating }} / {{ outOf }}</div>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default class Rating extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../styles/variables";
 @import "../../styles/breakpoints";
 
@@ -50,7 +50,7 @@ export default class Rating extends Vue {
     margin-top: $margin;
   }
 
-  .Icon {
+  &__icon {
     color: $brand-blue;
     font-size: 25px;
     margin-right: $margin / 2;
@@ -58,6 +58,10 @@ export default class Rating extends Vue {
     @include respond-below(ms) {
       font-size: 20px;
       margin-right: $margin / 4;
+    }
+
+    @include respond-between(ms, sm) {
+      font-size: 25px;
     }
   }
 }
