@@ -183,6 +183,11 @@ export default class CardItem extends Vue {
     }
   }
 
+  &__header-rating,
+  &__image-wrapper {
+    padding: $padding 0;
+  }
+
   &__header {
     font-weight: bold;
     position: relative;
