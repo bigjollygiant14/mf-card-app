@@ -69,7 +69,7 @@ yarn run build
 yarn run build:stage
 ```
 
-### Run your tests
+### Run your tests in Watch mode
 
 ```
 yarn run test
