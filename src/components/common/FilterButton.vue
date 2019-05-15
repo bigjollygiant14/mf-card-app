@@ -62,15 +62,24 @@ export default class FilterButton extends Vue {
     }
   }
 
+  &__icon {
+    align-items: center;
+    border: 2px solid $gray-600;
+    background-color: $white;
+    border-radius: 50%;
+    color: $brand-blue;
+    display: flex;
+    font-size: $font-size-base;
+    justify-content: center;
+  }
+
   &__icon-container {
     align-items: center;
     display: none;
-    height: 100%;
     justify-content: center;
-    left: 0;
+    left: -6px;
     position: absolute;
-    top: 0;
-    width: 100%;
+    top: -6px;
   }
 
   &--checked {
@@ -80,20 +89,15 @@ export default class FilterButton extends Vue {
     @include respond-above(sm) {
       &:hover {
         background-color: $gray-200;
+        cursor: pointer;
+
+        .FilterButton__icon {
+          background-color: $gray-200;
+        }
       }
     }
 
-    &__icon {
-      align-items: center;
-      border: 2px solid $gray-600;
-      border-radius: 50%;
-      color: $brand-blue;
-      display: flex;
-      font-size: $font-size-xlarge;
-      height: 36px;
-      justify-content: center;
-      width: 36px;
-
+    .FilterButton__icon {
       &-container {
         display: flex;
       }
