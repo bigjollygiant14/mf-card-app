@@ -214,6 +214,8 @@ export default class CardItem extends Vue {
       }
 
       &-stars {
+        font-weight: bold;
+
         @include respond-above(sm) {
           display: none;
         }
@@ -256,6 +258,7 @@ export default class CardItem extends Vue {
     &-stars {
       display: none;
       flex-basis: 100%;
+      font-weight: bold;
       text-align: center;
 
       @include respond-above(sm) {
