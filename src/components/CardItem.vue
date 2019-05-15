@@ -7,7 +7,9 @@
           class="CardItem__header-rating-stars"
           v-bind:rating="card.star_rating"
           v-bind:out-of="5"
-        />
+        >
+          <p>Overall Rating</p>
+        </Rating>
         <div class="CardItem__apply">
           <a
             v-if="card.affiliate_link"
@@ -33,16 +35,22 @@
         class="CardItem__ratings-stars"
         v-bind:rating="card.star_rating"
         v-bind:out-of="5"
-      />
+      >
+        <p>Overall Rating</p>
+      </Rating>
       <div class="CardItem__sub-rating">
         Fees
         <br />
-        <Rating v-bind:rating="card.fees_rating" v-bind:out-of="5" />
+        <Rating v-bind:rating="card.fees_rating" v-bind:out-of="5">
+          <p>{{ card.fees_rating }} / 5</p>
+        </Rating>
       </div>
       <div class="CardItem__sub-rating">
         APR
         <br />
-        <Rating v-bind:rating="card.aprs_rating" v-bind:out-of="5" />
+        <Rating v-bind:rating="card.aprs_rating" v-bind:out-of="5">
+          <p>{{ card.aprs_rating }} / 5</p>
+        </Rating>
       </div>
     </div>
 
@@ -147,6 +155,7 @@ export default class CardItem extends Vue {
 
     @include respond-above(sm) {
       font-size: $font-size-xlarge;
+      text-align: right;
       width: 100%;
     }
 
@@ -252,7 +261,7 @@ export default class CardItem extends Vue {
       @include respond-above(sm) {
         align-items: center;
         display: flex;
-        flex-basis: 100%;
+        flex-basis: 70%;
         flex-wrap: wrap;
         justify-content: space-around;
       }
@@ -268,7 +277,7 @@ export default class CardItem extends Vue {
 
       .Rating__text {
         @include respond-above(sm) {
-          display: none;
+          flex-basis: 100%;
         }
       }
     }
@@ -276,6 +285,7 @@ export default class CardItem extends Vue {
 
   &__sub-rating {
     flex: 2;
+    flex-basis: 50%;
     font-size: $font-size-small;
     text-align: left;
 

@@ -5,8 +5,11 @@
       v-for="(star, index) in outOf"
       v-bind:key="index"
       v-bind:icon="getIcon(index)"
+      v-bind:icon-family="getIconFamily(index)"
     />
-    <div class="Rating__text">{{ rating }} / {{ outOf }}</div>
+    <div class="Rating__text">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -27,15 +30,19 @@ export default class Rating extends Vue {
   @Prop() private outOf!: number;
 
   private getIcon(index: number): string {
-    if (index + 1 <= this.rating) {
+    if (index + 1 <= this.rating || index + 1 - this.rating >= 0.6) {
       return "star";
     }
 
-    if (index + 1 - this.rating <= 0.6) {
-      return "star-half";
+    return "star-half-alt";
+  }
+
+  private getIconFamily(index: number): string {
+    if (index + 1 - this.rating >= 0.6) {
+      return "far";
     }
 
-    return "";
+    return "fas";
   }
 }
 </script>

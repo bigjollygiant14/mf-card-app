@@ -9,9 +9,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class Icon extends Vue {
   @Prop() private icon!: string;
+  @Prop() private iconFamily?: string;
 
   private getIcon(): string {
-    return "Icon fas fa-" + this.icon;
+    const iconFamily = this.iconFamily || "fas";
+    return "Icon " + iconFamily + " fa-" + this.icon;
   }
 }
 </script>
