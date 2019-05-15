@@ -208,6 +208,10 @@ export default class CardItem extends Vue {
         @include respond-above(sm) {
           display: none;
         }
+
+        .Rating__icon {
+          font-size: 25px;
+        }
       }
     }
   }
