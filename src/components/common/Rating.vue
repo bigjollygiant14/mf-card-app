@@ -42,6 +42,7 @@ export default class Rating extends Vue {
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
+@import "../../styles/breakpoints";
 
 .Rating {
   &__text {
@@ -53,6 +54,11 @@ export default class Rating extends Vue {
     color: $brand-blue;
     font-size: 25px;
     margin-right: $margin / 2;
+
+    @include respond-below(ms) {
+      font-size: 20px;
+      margin-right: $margin / 4;
+    }
   }
 }
 </style>

@@ -6,7 +6,7 @@ import { shallowMount } from '@vue/test-utils';
 import CardList from '@/components/CardList.vue';
 
 // Scaffolding
-const cardTypeFilters = [
+const cardTypeFiltersMock = [
   {
     label: 'Balance Transfer',
     name: 'balance_transfer',
@@ -50,21 +50,46 @@ describe('CardList.vue', () => {
 
   describe('Render', () => {
     it('should render the header copy', () => {
-      // console.log(wrapper);
       const actual = wrapper.find('h2');
-      const expected = 'What can we help you find in a credit card?';
+      const expected = 'I want to maximize...';
       expect(actual.text()).toEqual(expected);
     });
   });
 
   describe('Methods', () => {
+    describe('vue lifecycle methods', () => {
+      /* it('should register getCardData on mount', () => {});
+      it('should listen to the EventBus on mount', () => {});
+      it('should list to the scroll event on mount', () => {}); */
+    });
+
     // Don't need to test sortCards method as it's just returning third party data
     it('getAppliedFiltersString should return an array of strings of applied filters', () => {
-      cardTypeFilters[1].checked = true;
+      let cardTypeFilters = [...cardTypeFiltersMock];
+      cardTypeFilters[1] = { ...cardTypeFiltersMock[1], checked: true };
       const expected = ['low_interest'];
       const actual = wrapper.vm.getAppliedFiltersString(cardTypeFilters);
 
       expect(actual).toEqual(expected);
+    });
+
+    it('applyCheckedToFilters should apply checked to filters', () => {
+      // Assert Initial Conditions
+      expect(wrapper.vm.cardTypeFilters).toEqual(cardTypeFiltersMock);
+
+      // Copy Mock
+      const expected = [...cardTypeFiltersMock];
+      expected[2] = { ...cardTypeFiltersMock[2], checked: true };
+
+      // Test
+      wrapper.vm.applyCheckedToFilters('travel');
+
+      // Assert End Conditions
+      expect(wrapper.vm.cardTypeFilters).toEqual(expected);
+    });
+
+    describe('handleFilterApply', () => {
+      it('should accept a name and apply the checkmark', () => {});
     });
   });
 });

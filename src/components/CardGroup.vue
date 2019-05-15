@@ -87,12 +87,13 @@ export default class CardGroup extends Vue {
     display: flex;
     flex-wrap: wrap;
 
-    @include respond-above(sm) {
+    @include respond-above(md) {
       flex: 4;
     }
 
     &-item {
-      @include respond-above(sm) {
+      @include respond-above(md) {
+        align-self: flex-start;
         flex: 2;
         margin: $margin * 2;
       }
@@ -102,6 +103,11 @@ export default class CardGroup extends Vue {
   &__cta {
     padding: 8px;
     border: 2px solid $gray-300;
+
+    @include respond-above(md) {
+      max-width: 700px;
+      margin: $margin * 2 auto;
+    }
   }
 
   &__header {

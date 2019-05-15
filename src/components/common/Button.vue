@@ -36,6 +36,10 @@ export default class Button extends Vue {
     background-color: $brand-blue;
     border: 1px solid $brand-blue;
     color: $white;
+
+    &:hover {
+      background-color: darken($brand-blue, 20%);
+    }
   }
 }
 </style>

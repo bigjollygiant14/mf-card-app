@@ -37,6 +37,7 @@ export default class CardFilters extends Vue {
 
 <style scoped lang="scss">
 @import "../styles/variables";
+@import "../styles/breakpoints";
 
 .CardFilters {
   align-items: center;
@@ -57,13 +58,27 @@ export default class CardFilters extends Vue {
     padding: $padding;
     text-align: center;
 
+    &:hover {
+      background-color: darken($brand-blue, 5%);
+    }
+
     &:last-child {
       margin-right: 0;
+    }
+
+    @include respond-above(sm) {
+      align-items: center;
+      height: 48px;
+      flex-wrap: nowrap;
     }
 
     .Icon {
       align-self: flex-end;
       font-size: $font-size-large;
+
+      @include respond-above(sm) {
+        align-self: center;
+      }
     }
   }
 }

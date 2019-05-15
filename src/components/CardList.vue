@@ -1,6 +1,6 @@
 <template>
   <div class="CardList">
-    <h2>What can we help you find in a credit card?</h2>
+    <h2>I want to maximize...</h2>
     <CardFilters
       class="CardList__filters"
       v-bind:card-type-filters="cardTypeFilters"
@@ -187,12 +187,16 @@ export default class CardList extends Vue {
     });
   }
 
-  private handleFilterApply(name: string): void {
-    // Apply Check
+  private applyCheckedToFilters(name: string): void {
     const index = this.cardTypeFilters.findIndex(card => {
       return card.name === name;
     });
     this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
+  }
+
+  private handleFilterApply(name: string): void {
+    // Apply Check
+    this.applyCheckedToFilters(name);
 
     // Get Strings of applied Checks
     let filterArray = this.getAppliedFiltersString(this.cardTypeFilters);

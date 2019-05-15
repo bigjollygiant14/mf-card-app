@@ -4,15 +4,16 @@
       <h2 class="CardItem__header-copy">{{ card.offer_name }}</h2>
       <div class="CardItem__header-rating">
         <Rating v-bind:rating="card.star_rating" v-bind:out-of="5" />
-        <a
-          v-if="card.affiliate_link"
-          class="CardItem__apply"
-          v-bind:href="card.affiliate_link"
-          target="_blank"
-        >
-          Apply Now
-          <Icon icon="chevron-right" />
-        </a>
+        <div class="CardItem__apply">
+          <a
+            v-if="card.affiliate_link"
+            v-bind:href="card.affiliate_link"
+            target="_blank"
+          >
+            Apply Now
+            <Icon icon="chevron-right" />
+          </a>
+        </div>
       </div>
       <div class="CardItem__image-wrapper">
         <CardImage
@@ -22,6 +23,7 @@
         />
       </div>
     </div>
+
     <div class="CardItem__ratings">
       <div class="CardItem__sub-rating">
         Fees
@@ -34,6 +36,7 @@
         <Rating v-bind:rating="card.aprs_rating" v-bind:out-of="5" />
       </div>
     </div>
+
     <div class="CardItem__tabs">
       <vue-tabs>
         <v-tab title="What We Like" class="CardItem__what-we-like">
@@ -121,14 +124,21 @@ export default class CardItem extends Vue {
 
 <style lang="scss">
 @import "../styles/variables";
+@import "../styles/breakpoints";
 
 .CardItem {
   box-shadow: 0px 4px 16px 4px rgba($black, 0.25);
+  border-radius: $border-radius;
   margin: $margin * 2 0;
   padding: $padding;
+  width: 100%;
 
   &__apply {
     font-size: $font-size-large;
+
+    @include respond-above(sm) {
+      width: 100%;
+    }
   }
 
   &__card-details {
@@ -151,14 +161,32 @@ export default class CardItem extends Vue {
     position: relative;
     text-transform: capitalize;
 
+    @include respond-above(sm) {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 $margin * 2;
+    }
+
     &-copy {
       width: 80%;
+
+      @include respond-above(sm) {
+        width: 100%;
+      }
     }
 
     &-rating {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      @include respond-above(sm) {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-top: $margin * 4;
+        order: 2;
+        width: 50%;
+      }
     }
   }
 
@@ -169,6 +197,11 @@ export default class CardItem extends Vue {
     &-wrapper {
       text-align: center;
       margin: $margin 0;
+
+      @include respond-above(sm) {
+        order: 3;
+        width: 50%;
+      }
     }
   }
 
@@ -178,6 +211,10 @@ export default class CardItem extends Vue {
     flex-wrap: wrap;
     justify-content: space-around;
     margin: $margin 0;
+
+    @include respond-above(sm) {
+      margin: $margin $margin * 2;
+    }
   }
 
   &__sub-rating {
@@ -201,6 +238,8 @@ export default class CardItem extends Vue {
       justify-content: space-around;
 
       li {
+        text-align: center;
+
         &.active {
           color: $brand-red;
         }
@@ -213,8 +252,8 @@ export default class CardItem extends Vue {
   }
 
   &__what-we-like {
-    text-align: left;
     padding: 0 $padding $padding;
+    text-align: left;
 
     li {
       font-weight: bold;
