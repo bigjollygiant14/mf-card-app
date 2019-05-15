@@ -63,7 +63,6 @@ describe('CardList.vue', () => {
       it('should list to the scroll event on mount', () => {}); */
     });
 
-    // Don't need to test sortCards method as it's just returning third party data
     it('getAppliedFiltersString should return an array of strings of applied filters', () => {
       let cardTypeFilters = [...cardTypeFiltersMock];
       cardTypeFilters[1] = { ...cardTypeFiltersMock[1], checked: true };
@@ -90,6 +89,99 @@ describe('CardList.vue', () => {
 
     describe('handleFilterApply', () => {
       it('should accept a name and apply the checkmark', () => {});
+    });
+
+    describe('sortCards', () => {
+      it('should sort a list of card recommendations by card_type and credit_rating', () => {
+        const actual = [
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'bad',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          },
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'good',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          },
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'fair',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          }
+        ];
+        const expected = [
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'good',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          },
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'fair',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          },
+          {
+            updated_date: 'Apr. 23, 2019',
+            card_type: 'balance_transfer',
+            credit_rating: 'bad',
+            intro_text: '',
+            cta_text: '',
+            card1: null,
+            card2: null,
+            error_text:
+              '<p>We\'ve not found a balance transfer credit card for bad credit that matches with what we think makes financial sense in a credit card, including low fees and a long 0% intro APR offer. But worry not, because you have options, including refinancing your debt to a low rate with a personal loan. <a href="/the-ascent/personal-loans/">Check out our picks of the best personal loans</a> to get started.</p>'
+          }
+        ];
+
+        expect(wrapper.vm.sortCards(actual)).toEqual(expected);
+      });
+    });
+
+    describe('scrollToTop', () => {
+      it('should scroll to top', () => {
+        window.scrollTo = jest.fn();
+        expect(window.scrollTo).not.toHaveBeenCalled();
+
+        const expected = {
+          top: 0,
+          behavior: 'smooth'
+        };
+
+        wrapper.vm.scrollToTop();
+
+        expect(window.scrollTo).toHaveBeenCalledWith(expected);
+      });
     });
   });
 });
