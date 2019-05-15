@@ -12,6 +12,8 @@ View a demo on [GitHub](https://bigjollygiant14.github.io/mf-card-app/)
 2. Run `yarn build`
 3. Copy contents of docs to destination directory
 
+**Note** If planning on hosting on a domain other than fool.com, you will need to configure the end point to allow CORS
+
 ## Architecture
 
 This project was bootstrapped with Vue-CLI for the purpose of saving time. The first thing I did was add a proxy so I could start pulling data so I could start playing around with features and how I was going to structure the components.
@@ -21,6 +23,7 @@ This resulted in these main features to aid the user in finding their card and i
 1. Filter by card_type to help users find what they\'re looking for faster. Allow the user to filter by any amount of card_types. Initially I was using checkboxes, but I thought that was boring, and using Icons seemed to make it look a little more engaging and less stale.
 2. Sort by credit rating so bad wouldn\'t be first. I thought putting positive wording first would give a better reaction on landing.
 3. Tabbed view of content I deemed secondary. People come to The Moley Fool becuase they trust the advice given. This is why the default tab is "Why We Picked It". I had initially played around with a Show More button but the content seemed to drag on and some of the lists got really long and placement of Show Less became awkward
+4. I wanted to create an app that had minimal styling but matched the color palette so it would fit on any page. With any list, I added filters at the top for easy filtering. On scoll down, an up arrow to easily access the filters again.
 
 ### Refactoring Opportunities
 
