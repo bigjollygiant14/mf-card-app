@@ -94,6 +94,8 @@ describe('CardList.vue', () => {
 
       beforeEach(() => {
         cardMock = [...cardRecsMock];
+        wrapper.vm.cardRecommendations = [...cardMock];
+        wrapper.vm.cardRecommendationsFull = [...cardMock];
       });
 
       it('should accept a name and apply the checkmark', () => {
@@ -137,10 +139,17 @@ describe('CardList.vue', () => {
         const spy = jest.spyOn(wrapper.vm, 'sortCards');
         expect(spy).not.toHaveBeenCalled();
 
+        wrapper.vm.cardRecommendations = [...cardMock];
+        wrapper.vm.cardRecommendationsFull = [...cardMock];
+
         wrapper.vm.handleFilterApply('balance_transfer');
 
+        const expected = filter(cardMock, filter => {
+          return filter.card_type === 'balance_transfer';
+        });
+
         expect(spy).toHaveBeenCalledTimes(1);
-        // Beef Up
+        expect(spy).toHaveBeenCalledWith(expected);
       });
 
       it('should return the entire list if length is 0', () => {
@@ -151,7 +160,7 @@ describe('CardList.vue', () => {
         wrapper.vm.handleFilterApply('balance_transfer');
 
         expect(spy).toHaveBeenCalledTimes(2);
-        // Beef Up
+        expect(spy).toHaveBeenCalledWith(cardMock);
       });
     });
 
