@@ -195,6 +195,17 @@ export default class CardList extends Vue {
     this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
   }
 
+  private buildCardRecommendations(arrayOfFilterStrings: string[]): void {
+    this.cardRecommendations = [];
+    for (let i = 0; i < arrayOfFilterStrings.length; i++) {
+      let filteredArray = this.filterCards(
+        this.cardRecommendationsFull,
+        arrayOfFilterStrings[i]
+      );
+      this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
+    }
+  }
+
   private handleFilterApply(name: string): void {
     // Apply Check
     this.applyCheckedToFilters(name);
@@ -203,14 +214,7 @@ export default class CardList extends Vue {
     let filterArray = this.getAppliedFiltersString(this.cardTypeFilters);
 
     // Build New Array of Filtered Cards to Display
-    this.cardRecommendations = [];
-    for (let i = 0; i < filterArray.length; i++) {
-      let filteredArray = this.filterCards(
-        this.cardRecommendationsFull,
-        filterArray[i]
-      );
-      this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
-    }
+    this.buildCardRecommendations(filterArray);
 
     // Sort and if length is 0, use full list
     this.cardRecommendations =
