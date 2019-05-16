@@ -12,7 +12,7 @@ const IconMock = {
 
 let wrapper: any;
 
-describe('Rating', () => {
+describe('Icon', () => {
   beforeEach(() => {
     wrapper = shallowMount(Icon, {
       propsData: { icon: IconMock.icon }
