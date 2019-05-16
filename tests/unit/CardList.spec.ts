@@ -1,6 +1,7 @@
 // Vendor
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
+import filter from 'lodash.filter';
 
 // Component
 import CardList from '@/components/CardList.vue';
@@ -34,6 +35,7 @@ const cardTypeFiltersMock = [
 ];
 
 let wrapper: any;
+let cardRecsMock = require('./data/CreditCardRecommendations');
 
 describe('CardList.vue', () => {
   beforeEach(() => {
@@ -88,7 +90,69 @@ describe('CardList.vue', () => {
     });
 
     describe('handleFilterApply', () => {
-      it('should accept a name and apply the checkmark', () => {});
+      let cardMock: any = [];
+
+      beforeEach(() => {
+        cardMock = [...cardRecsMock];
+      });
+
+      it('should accept a name and apply the checkmark', () => {
+        expect(wrapper.vm.cardTypeFilters[0].checked).toBeFalsy();
+
+        wrapper.vm.handleFilterApply('balance_transfer');
+
+        expect(wrapper.vm.cardTypeFilters[0].checked).toBeTruthy();
+      });
+
+      it('should call getAppliedFiltersString', () => {
+        const spy = jest.spyOn(wrapper.vm, 'getAppliedFiltersString');
+        const cardTypeFilters = [...cardTypeFiltersMock];
+        cardTypeFilters[0] = { ...cardTypeFiltersMock[0], checked: true };
+
+        expect(spy).not.toHaveBeenCalled();
+
+        wrapper.vm.handleFilterApply('balance_transfer');
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(cardTypeFilters);
+      });
+
+      it('should call buildCardRecommendations', () => {
+        const spy = jest.spyOn(wrapper.vm, 'buildCardRecommendations');
+        const cardTypeFilters = [...cardTypeFiltersMock];
+        cardTypeFilters[0] = { ...cardTypeFiltersMock[0], checked: true };
+
+        expect(spy).not.toHaveBeenCalled();
+
+        wrapper.vm.handleFilterApply('balance_transfer');
+
+        const expected = wrapper.vm.getAppliedFiltersString(
+          wrapper.vm.cardTypeFilters
+        );
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(expected);
+      });
+
+      it('should sort the card recs', () => {
+        const spy = jest.spyOn(wrapper.vm, 'sortCards');
+        expect(spy).not.toHaveBeenCalled();
+
+        wrapper.vm.handleFilterApply('balance_transfer');
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        // Beef Up
+      });
+
+      it('should return the entire list if length is 0', () => {
+        const spy = jest.spyOn(wrapper.vm, 'sortCards');
+        expect(spy).not.toHaveBeenCalled();
+
+        wrapper.vm.handleFilterApply('balance_transfer');
+        wrapper.vm.handleFilterApply('balance_transfer');
+
+        expect(spy).toHaveBeenCalledTimes(2);
+        // Beef Up
+      });
     });
 
     describe('sortCards', () => {
