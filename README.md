@@ -51,10 +51,16 @@ This resulted in these main features to aid the user in finding their card and i
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development, uses mock data pulled 5/16
 
 ```
 yarn run serve
+```
+
+### Compiles and hot-reloads for development, proxies live api for api dev on local env
+
+```
+yarn run serve:dev
 ```
 
 ### Compiles and minifies for production

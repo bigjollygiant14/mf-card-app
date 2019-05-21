@@ -1,7 +1,11 @@
 <template>
   <div
     class="FilterButton"
-    v-bind:class="{ 'FilterButton--checked': checked === true }"
+    v-bind:class="{
+      'FilterButton--checked': checked === true,
+      'FilterButton--primary': buttonType === 'primary',
+      'FilterButton--secondary': buttonType === 'secondary'
+    }"
     v-on:mousedown="emitGlobalClickEvent"
   >
     <slot></slot>
@@ -27,6 +31,7 @@ import { EventBus } from "@/lib";
   }
 })
 export default class FilterButton extends Vue {
+  @Prop({ default: "primary" }) private buttonType?: string;
   @Prop() private checked!: boolean;
   @Prop() private name!: string;
 
@@ -42,10 +47,7 @@ export default class FilterButton extends Vue {
 
 .FilterButton {
   align-items: baseline;
-  background-color: $brand-blue;
-  border: 2px solid $brand-blue;
   border-radius: $border-radius;
-  color: $white;
   display: flex;
   flex: 2;
   flex-wrap: wrap;
@@ -56,18 +58,9 @@ export default class FilterButton extends Vue {
   position: relative;
   text-align: center;
 
-  @include respond-above(sm) {
-    &:hover {
-      background-color: darken($brand-blue, 10%);
-    }
-  }
-
   &__icon {
     align-items: center;
-    border: 2px solid $gray-600;
-    background-color: $white;
     border-radius: 50%;
-    color: $brand-blue;
     display: flex;
     font-size: $font-size-base;
     justify-content: center;
@@ -83,23 +76,83 @@ export default class FilterButton extends Vue {
   }
 
   &--checked {
-    background-color: $white;
-    color: $brand-blue;
-
     @include respond-above(sm) {
       &:hover {
-        background-color: $gray-200;
         cursor: pointer;
-
-        .FilterButton__icon {
-          background-color: $gray-200;
-        }
       }
     }
 
     .FilterButton__icon {
       &-container {
         display: flex;
+      }
+    }
+  }
+
+  &--primary {
+    background-color: $brand-blue;
+    border: 2px solid $brand-blue;
+    color: $white;
+
+    .FilterButton__icon {
+      border: 2px solid $gray-600;
+      background-color: $white;
+      color: $brand-blue;
+    }
+
+    &.FilterButton--checked {
+      background-color: $white;
+      color: $brand-blue;
+
+      @include respond-above(sm) {
+        &:hover {
+          background-color: $gray-200;
+          cursor: pointer;
+
+          .FilterButton__icon {
+            background-color: $gray-200;
+          }
+        }
+      }
+    }
+
+    @include respond-above(sm) {
+      &:hover {
+        background-color: darken($brand-blue, 10%);
+      }
+    }
+  }
+
+  &--secondary {
+    background-color: $brand-red;
+    border: 2px solid $brand-red;
+    color: $white;
+
+    .FilterButton__icon {
+      border: 2px solid $gray-600;
+      background-color: $white;
+      color: $brand-red;
+    }
+
+    &.FilterButton--checked {
+      background-color: $white;
+      color: $brand-red;
+
+      @include respond-above(sm) {
+        &:hover {
+          background-color: $gray-200;
+          cursor: pointer;
+
+          .FilterButton__icon {
+            background-color: $gray-200;
+          }
+        }
+      }
+    }
+
+    @include respond-above(sm) {
+      &:hover {
+        background-color: darken($brand-red, 10%);
       }
     }
   }

@@ -1,18 +1,36 @@
 <template>
   <div class="CardFilters">
-    <div class="CardFilters__copy">
-      <slot></slot>
+    <div class="CardFilters__filters">
+      <div class="CardFilters__copy">
+        <slot name="filterCopy"></slot>
+      </div>
+      <FilterButton
+        class="CardFilters__filter"
+        v-for="(option, index) in cardTypeFilters"
+        v-bind:key="'card' + index"
+        v-bind:checked="option.checked"
+        v-bind:name="option.name"
+      >
+        <h3>{{ option.label }}</h3>
+        <Icon v-bind:icon="option.icon" />
+      </FilterButton>
     </div>
-    <FilterButton
-      class="CardFilters__filter"
-      v-for="(option, index) in cardTypeFilters"
-      v-bind:key="index"
-      v-bind:checked="option.checked"
-      v-bind:name="option.name"
-    >
-      <h3>{{ option.label }}</h3>
-      <Icon v-bind:icon="option.icon" />
-    </FilterButton>
+
+    <div class="CardFilters__filters">
+      <div class="CardFilters__copy">
+        <slot name="subFilterCopy"></slot>
+      </div>
+      <FilterButton
+        class="CardFilters__filter CardFilters__filter--secondary"
+        v-for="(option, index) in creditTypeFilters"
+        v-bind:key="'credit' + index"
+        v-bind:checked="option.checked"
+        v-bind:name="option.name"
+        button-type="secondary"
+      >
+        <h3>{{ option.label }}</h3>
+      </FilterButton>
+    </div>
   </div>
 </template>
 
@@ -35,6 +53,7 @@ import { Filters } from "@/lib";
 })
 export default class CardFilters extends Vue {
   @Prop() private cardTypeFilters!: Filters[];
+  @Prop() private creditTypeFilters!: Filters[];
 }
 </script>
 
@@ -43,15 +62,17 @@ export default class CardFilters extends Vue {
 @import "../styles/breakpoints";
 
 .CardFilters {
-  align-items: center;
-  display: flex;
-  flex: 8;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  &__filters {
+    align-items: center;
+    display: flex;
+    flex: 8;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-  @include respond-above(sm) {
-    flex: 6;
-    flex-wrap: nowrap;
+    @include respond-above(sm) {
+      flex: 6;
+      flex-wrap: nowrap;
+    }
   }
 
   &__copy {
@@ -60,6 +81,7 @@ export default class CardFilters extends Vue {
 
     @include respond-above(sm) {
       flex: 2;
+      flex-basis: 25%;
     }
   }
 
@@ -82,6 +104,11 @@ export default class CardFilters extends Vue {
       @include respond-above(sm) {
         align-self: center;
       }
+    }
+
+    &--secondary {
+      font-size: 12px;
+      height: 20px;
     }
   }
 }

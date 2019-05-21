@@ -3,8 +3,14 @@
     <CardFilters
       class="CardList__filters"
       v-bind:card-type-filters="cardTypeFilters"
+      v-bind:credit-type-filters="creditTypeFilters"
     >
-      <h2 class="CardList__filters-header">I want to maximize...</h2>
+      <template v-slot:filterCopy>
+        <h2 class="CardList__filters-header">I want to maximize...</h2>
+      </template>
+      <template v-slot:subFilterCopy>
+        <h4 class="CardList__filters-subheader">My credit is...</h4>
+      </template>
     </CardFilters>
 
     <Loading v-bind:is-loading="isLoading" />
@@ -101,6 +107,33 @@ export default class CardList extends Vue {
       icon: "hand-holding-usd"
     }
   ];
+  private creditTypeFilters: Filters[] = [
+    {
+      label: "Excellent",
+      name: "excellent",
+      checked: false
+    },
+    {
+      label: "Good to Excellent",
+      name: "goodexcellent",
+      checked: false
+    },
+    {
+      label: "Good",
+      name: "good",
+      checked: false
+    },
+    {
+      label: "Fair",
+      name: "fair",
+      checked: false
+    },
+    {
+      label: "Bad",
+      name: "bad",
+      checked: false
+    }
+  ];
 
   private async getCardData(): Promise<void> {
     this.isLoading = true;
@@ -119,34 +152,16 @@ export default class CardList extends Vue {
 
   private getCardDataFromService(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      if (process.env.VUE_APP_ENV !== "stage") {
-        const api = process.env.VUE_APP_API_URL;
-        axios
-          .get(api + "/creditcardrecommendations/")
-          .then(function(response) {
-            if (response.status === 200) {
-              resolve(response.data);
-            }
-          })
-          .catch(function(error) {
-            reject(error);
-          });
-      } else {
-        setTimeout(() => {
-          axios
-            .get(
-              process.env.VUE_APP_API_URL + "/CreditCardRecommendations.json"
-            )
-            .then(function(response) {
-              if (response.status === 200) {
-                resolve(response.data);
-              }
-            })
-            .catch(function(error) {
-              reject(error);
-            });
-        }, 500);
-      }
+      axios
+        .get(process.env.VUE_APP_API_URL)
+        .then(function(response) {
+          if (response.status === 200) {
+            resolve(response.data);
+          }
+        })
+        .catch(function(error) {
+          reject(error);
+        });
     });
   }
 
