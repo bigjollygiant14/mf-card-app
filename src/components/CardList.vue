@@ -2,8 +2,8 @@
   <div class="CardList">
     <CardFilters
       class="CardList__filters"
-      v-bind:card-type-filters="cardTypeFilters"
-      v-bind:credit-type-filters="creditTypeFilters"
+      v-bind:card-type-filters="filters.card_type"
+      v-bind:credit-type-filters="filters.credit_type"
     >
       <template v-slot:filterCopy>
         <h2 class="CardList__filters-header">I want to maximize...</h2>
@@ -81,68 +81,70 @@ export default class CardList extends Vue {
   private isLoading: boolean = false;
   private error: Error[] = [];
   private isVisible: boolean = false;
-  private cardTypeFilters: Filters[] = [
-    {
-      label: "Balance Transfer",
-      name: "balance_transfer",
-      checked: false,
-      icon: "exchange-alt",
-      type: "card_type"
-    },
-    {
-      label: "Low Interest",
-      name: "low_interest",
-      checked: false,
-      icon: "tag",
-      type: "card_type"
-    },
-    {
-      label: "Travel",
-      name: "travel",
-      checked: false,
-      icon: "plane-departure",
-      type: "card_type"
-    },
-    {
-      label: "Cash Back",
-      name: "cash_back",
-      checked: false,
-      icon: "hand-holding-usd",
-      type: "card_type"
-    }
-  ];
-  private creditTypeFilters: Filters[] = [
-    {
-      label: "Excellent",
-      name: "excellent",
-      checked: false,
-      type: "credit_rating"
-    },
-    {
-      label: "Good to Excellent",
-      name: "goodexcellent",
-      checked: false,
-      type: "credit_rating"
-    },
-    {
-      label: "Good",
-      name: "good",
-      checked: false,
-      type: "credit_rating"
-    },
-    {
-      label: "Fair",
-      name: "fair",
-      checked: false,
-      type: "credit_rating"
-    },
-    {
-      label: "Bad",
-      name: "bad",
-      checked: false,
-      type: "credit_rating"
-    }
-  ];
+  private filters = {
+    card_type: [
+      {
+        label: "Balance Transfer",
+        name: "balance_transfer",
+        checked: false,
+        icon: "exchange-alt",
+        type: "card_type"
+      },
+      {
+        label: "Low Interest",
+        name: "low_interest",
+        checked: false,
+        icon: "tag",
+        type: "card_type"
+      },
+      {
+        label: "Travel",
+        name: "travel",
+        checked: false,
+        icon: "plane-departure",
+        type: "card_type"
+      },
+      {
+        label: "Cash Back",
+        name: "cash_back",
+        checked: false,
+        icon: "hand-holding-usd",
+        type: "card_type"
+      }
+    ],
+    credit_type: [
+      {
+        label: "Excellent",
+        name: "excellent",
+        checked: false,
+        type: "credit_rating"
+      },
+      {
+        label: "Good to Excellent",
+        name: "goodexcellent",
+        checked: false,
+        type: "credit_rating"
+      },
+      {
+        label: "Good",
+        name: "good",
+        checked: false,
+        type: "credit_rating"
+      },
+      {
+        label: "Fair",
+        name: "fair",
+        checked: false,
+        type: "credit_rating"
+      },
+      {
+        label: "Bad",
+        name: "bad",
+        checked: false,
+        type: "credit_rating"
+      }
+    ]
+  };
 
   private async getCardData(): Promise<void> {
     this.isLoading = true;
@@ -230,8 +232,9 @@ export default class CardList extends Vue {
     }
   }
 
-  private handleFilterApply(name: string): void {
+  private handleFilterApply(name: string, type: string): void {
     // Apply Check
+    // To Do: update filters
     this.applyCheckedToFilters(name);
 
     // Get Strings of applied Checks
