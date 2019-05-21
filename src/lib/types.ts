@@ -54,9 +54,10 @@ export interface CardIssuer {
 
 export interface Filters {
   checked: boolean;
+  icon?: string;
   label: string;
   name: string;
-  icon?: string;
+  type: string;
 }
 
 export interface Error {

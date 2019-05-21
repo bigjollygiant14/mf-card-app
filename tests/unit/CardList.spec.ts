@@ -12,25 +12,29 @@ const cardTypeFiltersMock = [
     label: 'Balance Transfer',
     name: 'balance_transfer',
     checked: false,
-    icon: 'exchange-alt'
+    icon: 'exchange-alt',
+    type: 'card_type'
   },
   {
     label: 'Low Interest',
     name: 'low_interest',
     checked: false,
-    icon: 'tag'
+    icon: 'tag',
+    type: 'card_type'
   },
   {
     label: 'Travel',
     name: 'travel',
     checked: false,
-    icon: 'plane-departure'
+    icon: 'plane-departure',
+    type: 'card_type'
   },
   {
     label: 'Cash Back',
     name: 'cash_back',
     checked: false,
-    icon: 'hand-holding-usd'
+    icon: 'hand-holding-usd',
+    type: 'card_type'
   }
 ];
 
@@ -51,11 +55,12 @@ describe('CardList.vue', () => {
   });
 
   describe('Render', () => {
-    it('should render the header copy', () => {
+    // moved this to a slot. will need to fully mount to test. add render test for no data
+    /* it('should render the header copy', () => {
       const actual = wrapper.find('h2');
       const expected = 'I want to maximize...';
       expect(actual.text()).toEqual(expected);
-    });
+    }); */
   });
 
   describe('Methods', () => {

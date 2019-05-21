@@ -11,7 +11,8 @@ import { EventBus } from '@/lib';
 // Scaffold
 const FilterButtonMock = {
   checked: true,
-  name: 'balance_transfer'
+  name: 'balance_transfer',
+  type: 'card_type'
 };
 
 let wrapper: any;
@@ -21,7 +22,8 @@ describe('FilterButton', () => {
     wrapper = shallowMount(FilterButton, {
       propsData: {
         checked: FilterButtonMock.checked,
-        name: FilterButtonMock.name
+        name: FilterButtonMock.name,
+        type: 'card_type'
       }
     });
   });
@@ -42,7 +44,75 @@ describe('FilterButton', () => {
 
     it('should add --checked class if checked === true', () => {
       const actual = wrapper.find('.FilterButton');
-      const expected = ['FilterButton', 'FilterButton--checked'];
+      const expected = [
+        'FilterButton',
+        'FilterButton--primary',
+        'FilterButton--checked'
+      ];
+      expect(actual.classes()).toEqual(expected);
+    });
+
+    it('should add --primary class if buttonType isnt defined', () => {
+      const actual = wrapper.find('.FilterButton');
+      const expected = [
+        'FilterButton',
+        'FilterButton--primary',
+        'FilterButton--checked'
+      ];
+      expect(actual.classes()).toEqual(expected);
+    });
+  });
+
+  describe('Render ButtonType', () => {
+    beforeEach(() => {
+      wrapper = shallowMount(FilterButton, {
+        propsData: {
+          checked: FilterButtonMock.checked,
+          name: FilterButtonMock.name,
+          type: 'card_type',
+          buttonType: 'primary'
+        }
+      });
+    });
+
+    afterEach(() => {
+      wrapper.vm.$destroy;
+    });
+
+    it('should add --primary class if buttonType === primary', () => {
+      const actual = wrapper.find('.FilterButton');
+      const expected = [
+        'FilterButton',
+        'FilterButton--primary',
+        'FilterButton--checked'
+      ];
+      expect(actual.classes()).toEqual(expected);
+    });
+  });
+
+  describe('Render ButtonType', () => {
+    beforeEach(() => {
+      wrapper = shallowMount(FilterButton, {
+        propsData: {
+          checked: FilterButtonMock.checked,
+          name: FilterButtonMock.name,
+          type: 'card_type',
+          buttonType: 'secondary'
+        }
+      });
+    });
+
+    afterEach(() => {
+      wrapper.vm.$destroy;
+    });
+
+    it('should add --secondary class if buttonType === secondary', () => {
+      const actual = wrapper.find('.FilterButton');
+      const expected = [
+        'FilterButton',
+        'FilterButton--secondary',
+        'FilterButton--checked'
+      ];
       expect(actual.classes()).toEqual(expected);
     });
   });
@@ -54,7 +124,11 @@ describe('FilterButton', () => {
       wrapper.vm.emitGlobalClickEvent();
 
       expect(spy).toHaveBeenCalled();
-      expect(spy).toHaveBeenCalledWith('apply-filter', 'balance_transfer');
+      expect(spy).toHaveBeenCalledWith(
+        'apply-filter',
+        'balance_transfer',
+        'card_type'
+      );
     });
   });
 });
@@ -64,7 +138,8 @@ describe('FilterButton - Checked False: Render', () => {
     wrapper = shallowMount(FilterButton, {
       propsData: {
         checked: false,
-        name: FilterButtonMock.name
+        name: FilterButtonMock.name,
+        type: FilterButtonMock.type
       }
     });
   });
@@ -75,7 +150,7 @@ describe('FilterButton - Checked False: Render', () => {
 
   it('should not have --checked class if checked === false', () => {
     const actual = wrapper.find('.FilterButton');
-    const expected = ['FilterButton'];
+    const expected = ['FilterButton', 'FilterButton--primary'];
     expect(actual.classes()).toEqual(expected);
   });
 });

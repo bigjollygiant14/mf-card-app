@@ -2,9 +2,9 @@
   <div
     class="FilterButton"
     v-bind:class="{
-      'FilterButton--checked': checked === true,
       'FilterButton--primary': buttonType === 'primary',
-      'FilterButton--secondary': buttonType === 'secondary'
+      'FilterButton--secondary': buttonType === 'secondary',
+      'FilterButton--checked': checked === true
     }"
     v-on:mousedown="emitGlobalClickEvent"
   >
@@ -34,9 +34,10 @@ export default class FilterButton extends Vue {
   @Prop({ default: "primary" }) private buttonType?: string;
   @Prop() private checked!: boolean;
   @Prop() private name!: string;
+  @Prop() private type!: string;
 
   private emitGlobalClickEvent(): void {
-    EventBus.$emit("apply-filter", this.name);
+    EventBus.$emit("apply-filter", this.name, this.type);
   }
 }
 </script>

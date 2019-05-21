@@ -86,52 +86,61 @@ export default class CardList extends Vue {
       label: "Balance Transfer",
       name: "balance_transfer",
       checked: false,
-      icon: "exchange-alt"
+      icon: "exchange-alt",
+      type: "card_type"
     },
     {
       label: "Low Interest",
       name: "low_interest",
       checked: false,
-      icon: "tag"
+      icon: "tag",
+      type: "card_type"
     },
     {
       label: "Travel",
       name: "travel",
       checked: false,
-      icon: "plane-departure"
+      icon: "plane-departure",
+      type: "card_type"
     },
     {
       label: "Cash Back",
       name: "cash_back",
       checked: false,
-      icon: "hand-holding-usd"
+      icon: "hand-holding-usd",
+      type: "card_type"
     }
   ];
   private creditTypeFilters: Filters[] = [
     {
       label: "Excellent",
       name: "excellent",
-      checked: false
+      checked: false,
+      type: "credit_rating"
     },
     {
       label: "Good to Excellent",
       name: "goodexcellent",
-      checked: false
+      checked: false,
+      type: "credit_rating"
     },
     {
       label: "Good",
       name: "good",
-      checked: false
+      checked: false,
+      type: "credit_rating"
     },
     {
       label: "Fair",
       name: "fair",
-      checked: false
+      checked: false,
+      type: "credit_rating"
     },
     {
       label: "Bad",
       name: "bad",
-      checked: false
+      checked: false,
+      type: "credit_rating"
     }
   ];
 
