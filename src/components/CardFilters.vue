@@ -9,6 +9,7 @@
         v-for="(option, index) in cardTypeFilters"
         v-bind:key="'card' + index"
         v-bind:checked="option.checked"
+        v-bind:type="option.type"
         v-bind:name="option.name"
       >
         <h3>{{ option.label }}</h3>
@@ -26,6 +27,7 @@
         v-bind:key="'credit' + index"
         v-bind:checked="option.checked"
         v-bind:name="option.name"
+        v-bind:type="option.type"
         button-type="secondary"
       >
         <h3>{{ option.label }}</h3>

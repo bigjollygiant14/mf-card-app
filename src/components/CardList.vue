@@ -3,7 +3,7 @@
     <CardFilters
       class="CardList__filters"
       v-bind:card-type-filters="filters.card_type"
-      v-bind:credit-type-filters="filters.credit_type"
+      v-bind:credit-type-filters="filters.credit_rating"
     >
       <template v-slot:filterCopy>
         <h2 class="CardList__filters-header">I want to maximize...</h2>
@@ -112,7 +112,7 @@ export default class CardList extends Vue {
         type: "card_type"
       }
     ],
-    credit_type: [
+    credit_rating: [
       {
         label: "Excellent",
         name: "excellent",
@@ -197,12 +197,9 @@ export default class CardList extends Vue {
     return orderBy(cardList, ["card_type", "credit_rating"], ["asc", "desc"]);
   }
 
-  private filterCards(
-    cardList: CreditCardRecommendations[],
-    name: string
-  ): CreditCardRecommendations[] {
-    return filter(cardList, card => {
-      return card.card_type === name;
+  private filterCards(name: string, type: string): CreditCardRecommendations[] {
+    return filter(this.cardRecommendationsFull, card => {
+      return card[type] === name;
     });
   }
 
@@ -214,34 +211,36 @@ export default class CardList extends Vue {
     });
   }
 
-  private applyCheckedToFilters(name: string): void {
-    const index = this.cardTypeFilters.findIndex(card => {
+  private applyCheckedToFilters(name: string, type: string): void {
+    const index = this.filters[type].findIndex(card => {
       return card.name === name;
     });
-    this.cardTypeFilters[index].checked = !this.cardTypeFilters[index].checked;
+    this.filters[type][index].checked = !this.filters[type][index].checked;
   }
 
-  private buildCardRecommendations(arrayOfFilterStrings: string[]): void {
-    this.cardRecommendations = [];
+  private buildCardRecommendations(
+    arrayOfFilterStrings: string[],
+    type: string
+  ): CreditCardRecommendations[] {
+    let cardRecommendations: CreditCardRecommendations[] = [];
+
     for (let i = 0; i < arrayOfFilterStrings.length; i++) {
-      let filteredArray = this.filterCards(
-        this.cardRecommendationsFull,
-        arrayOfFilterStrings[i]
-      );
-      this.cardRecommendations = this.cardRecommendations.concat(filteredArray);
+      let filteredArray = this.filterCards(arrayOfFilterStrings[i], type);
+      cardRecommendations = cardRecommendations.concat(filteredArray);
     }
+
+    return cardRecommendations;
   }
 
   private handleFilterApply(name: string, type: string): void {
     // Apply Check
-    // To Do: update filters
-    this.applyCheckedToFilters(name);
+    this.applyCheckedToFilters(name, type);
 
     // Get Strings of applied Checks
-    let filterArray = this.getAppliedFiltersString(this.cardTypeFilters);
+    let filterArray = this.getAppliedFiltersString(this.filters[type]);
 
     // Build New Array of Filtered Cards to Display
-    this.buildCardRecommendations(filterArray);
+    this.cardRecommendations = this.buildCardRecommendations(filterArray, type);
 
     // Sort and if length is 0, use full list
     this.cardRecommendations =
