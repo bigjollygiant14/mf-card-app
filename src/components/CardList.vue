@@ -147,13 +147,13 @@ export default class CardList extends Vue {
   };
 
   private async getCardData(): Promise<void> {
-    this.isLoading = true;
+    this.toggleLoading(true);
     try {
       this.cardRecommendationsFull = await this.getCardDataFromService();
       this.cardRecommendations = this.sortCards(this.cardRecommendationsFull);
-      this.isLoading = false;
+      this.toggleLoading(false);
     } catch (err) {
-      this.isLoading = false;
+      this.toggleLoading(false);
       this.error = [
         ...this.error,
         { status: err.status, message: err.message }
@@ -189,6 +189,10 @@ export default class CardList extends Vue {
       ((document.documentElement && document.documentElement.scrollTop) ||
         document.body.scrollTop) >=
       0.2 * window.innerHeight;
+  }
+
+  private toggleLoading(state: boolean): void {
+    this.isLoading = state;
   }
 
   private sortCards(
