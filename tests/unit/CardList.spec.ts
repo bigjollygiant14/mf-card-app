@@ -2,7 +2,6 @@
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import filter from 'lodash.filter';
-import axios from 'axios';
 
 // Component
 import CardList from '@/components/CardList.vue';
@@ -78,6 +77,9 @@ const mockFilters = {
 
 let wrapper: any;
 let cardRecsMock = require('./data/CreditCardRecommendations');
+
+jest.mock('axios');
+jest.setTimeout(10000);
 
 describe('CardList.vue', () => {
   beforeEach(() => {
@@ -727,6 +729,16 @@ describe('CardList.vue', () => {
     });
 
     describe('getCardData', () => {
+      beforeEach(() => {
+        /* const mockCards = Array.from(cardRecsMock);
+
+        jest.mock('axios', () => {
+          return {
+            get: () => ({ data: mockCards, status: 200 })
+          };
+        }); */
+      });
+
       it('should call getCardDataFromService', () => {
         const spy = jest.spyOn(wrapper.vm, 'getCardDataFromService');
         expect(spy).not.toHaveBeenCalled();
@@ -736,17 +748,52 @@ describe('CardList.vue', () => {
         expect(spy).toHaveBeenCalledTimes(1);
       });
 
-      it('should set cardRecommendations and cardRecommendationsFull after response', () => {
-        const axiosSpy = jest.spyOn(axios, 'get');
-        // () => Promise.resolve({data: 'value'})
-        const spy = jest.spyOn(wrapper.vm, 'getCardDataFromService');
-        expect(spy).not.toHaveBeenCalled();
-        expect(axiosSpy).not.toHaveBeenCalled();
+      it('should set cardRecommendatiosn and cardRecommendationsFull after response', async done => {
+        // Beef up tests - Count, calledWith
+        wrapper.vm.cardRecommendations = [];
+        wrapper.vm.cardRecommendationsFull = [];
 
-        wrapper.vm.getCardData();
+        expect(wrapper.vm.cardRecommendations.length).toBe(0);
+        expect(wrapper.vm.cardRecommendationsFull.length).toBe(0);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(axiosSpy).toHaveBeenCalledTimes(1);
+        await wrapper.vm.getCardData();
+
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.cardRecommendations.length).toBe(20);
+          expect(wrapper.vm.cardRecommendationsFull.length).toBe(20);
+          done();
+        });
+      });
+
+      it('should set error if an error is returned from service', async done => {
+        // Beef up tests - Count, calledWith
+        wrapper.vm.cardRecommendations = [];
+        wrapper.vm.cardRecommendationsFull = [];
+
+        expect(wrapper.vm.cardRecommendations.length).toBe(0);
+        expect(wrapper.vm.cardRecommendationsFull.length).toBe(0);
+        expect(wrapper.vm.error.length).toBe(0);
+
+        await wrapper.vm.getCardData();
+
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.cardRecommendations.length).toBe(0);
+          expect(wrapper.vm.cardRecommendationsFull.length).toBe(0);
+          expect(wrapper.vm.error.length).toBe(1);
+          expect(wrapper.vm.error[0].message).toBe('Error Contacting Service');
+          expect(wrapper.vm.error[0].status).toBe(500);
+          done();
+        });
+      });
+
+      it('should call axios and return data', async done => {
+        // Beef up tests - Count, calledWith
+        const expected = await wrapper.vm.getCardDataFromService();
+
+        wrapper.vm.$nextTick(() => {
+          expect(expected).toEqual(cardRecsMock);
+          done();
+        });
       });
     });
   });
