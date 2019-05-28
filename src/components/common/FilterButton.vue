@@ -59,6 +59,10 @@ export default class FilterButton extends Vue {
   position: relative;
   text-align: center;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &__icon {
     align-items: center;
     border-radius: 50%;

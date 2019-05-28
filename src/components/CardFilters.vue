@@ -4,34 +4,38 @@
       <div class="CardFilters__copy">
         <slot name="filterCopy"></slot>
       </div>
-      <FilterButton
-        class="CardFilters__filter"
-        v-for="(option, index) in cardTypeFilters"
-        v-bind:key="'card' + index"
-        v-bind:checked="option.checked"
-        v-bind:type="option.type"
-        v-bind:name="option.name"
-      >
-        <h3>{{ option.label }}</h3>
-        <Icon v-bind:icon="option.icon" />
-      </FilterButton>
+      <div class="CardFilters__filters-list">
+        <FilterButton
+          class="CardFilters__filter"
+          v-for="(option, index) in cardTypeFilters"
+          v-bind:key="'card' + index"
+          v-bind:checked="option.checked"
+          v-bind:type="option.type"
+          v-bind:name="option.name"
+        >
+          <h3>{{ option.label }}</h3>
+          <Icon v-bind:icon="option.icon" />
+        </FilterButton>
+      </div>
     </div>
 
     <div class="CardFilters__filters">
       <div class="CardFilters__copy">
         <slot name="subFilterCopy"></slot>
       </div>
-      <FilterButton
-        class="CardFilters__filter CardFilters__filter--secondary"
-        v-for="(option, index) in creditTypeFilters"
-        v-bind:key="'credit' + index"
-        v-bind:checked="option.checked"
-        v-bind:name="option.name"
-        v-bind:type="option.type"
-        button-type="secondary"
-      >
-        <h3>{{ option.label }}</h3>
-      </FilterButton>
+      <div class="CardFilters__filters-list">
+        <FilterButton
+          class="CardFilters__filter CardFilters__filter--secondary"
+          v-for="(option, index) in creditTypeFilters"
+          v-bind:key="'credit' + index"
+          v-bind:checked="option.checked"
+          v-bind:name="option.name"
+          v-bind:type="option.type"
+          button-type="secondary"
+        >
+          <h3>{{ option.label }}</h3>
+        </FilterButton>
+      </div>
     </div>
   </div>
 </template>
@@ -65,15 +69,21 @@ export default class CardFilters extends Vue {
 
 .CardFilters {
   &__filters {
-    align-items: center;
     display: flex;
     flex: 8;
     flex-wrap: wrap;
-    justify-content: space-between;
 
-    @include respond-above(sm) {
-      flex: 6;
-      flex-wrap: nowrap;
+    &-list {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: $margin;
+
+      @include respond-above(sm) {
+        flex-basis: 75%;
+        flex-wrap: nowrap;
+      }
     }
   }
 
@@ -94,7 +104,6 @@ export default class CardFilters extends Vue {
 
     @include respond-above(sm) {
       align-items: center;
-      flex: 1;
       height: 48px;
       flex-wrap: nowrap;
     }
@@ -111,6 +120,10 @@ export default class CardFilters extends Vue {
     &--secondary {
       font-size: 12px;
       height: 20px;
+
+      h3 {
+        margin: 0;
+      }
     }
   }
 }
