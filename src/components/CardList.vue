@@ -241,6 +241,7 @@ export default class CardList extends Vue {
     this.applyCheckedToFilters(name, type);
 
     // Get Strings of applied Checks
+    // To Do: Multiple Filters - Currently only applies filter for one or the other. We either need to remove the styling from the non used or update the filter method.
     let filterArray = this.getAppliedFiltersString(this.filters[type]);
 
     // Build New Array of Filtered Cards to Display
